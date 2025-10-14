@@ -1,0 +1,14 @@
+{
+  "compilerOptions": {
+    "target": "es2017",
+    "module": "es6",
+    "strict": true,
+    "outDir": "./public/dist",
+    "rootDir": "./src",
+    "moduleResolution": "node",
+    "allowUmdGlobalAccess": true 
+  },
+  "include": [
+    "src"
+  ]
+}

@@ -3,7 +3,9 @@ build/
 !gradle/wrapper/gradle-wrapper.jar
 !**/src/main/**/build/
 !**/src/test/**/build/
-
+Front-End LinkerTinder/node_modules/
+Front-End LinkerTinder/dist/
+Front-End LinkerTinder/build/
 ### IntelliJ IDEA ###
 .idea/modules.xml
 .idea/jarRepositories.xml

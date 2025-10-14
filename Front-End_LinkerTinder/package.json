@@ -1,0 +1,21 @@
+{
+  "name": "front-end",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "build": "tsc",
+    "dev": "tsc --watch"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@types/chart.js": "^2.9.41",
+    "http-server": "^14.1.1",
+    "typescript": "^5.9.2"
+  },
+  "dependencies": {
+    "chart.js": "^4.5.0"
+  }
+}
