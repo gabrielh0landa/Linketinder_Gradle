@@ -1,0 +1,26 @@
+plugins {
+    id 'groovy'
+    id 'application'
+}
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    implementation 'org.postgresql:postgresql:42.7.3'
+    implementation 'org.apache.groovy:groovy-all:4.0.15'
+    testImplementation 'org.junit.jupiter:junit-jupiter-api:5.9.2'
+    testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.9.2'
+}
+
+application {
+    mainClass = 'main.Master'
+}
+
+tasks.named('test') {
+    useJUnitPlatform()
+}
+run {
+    standardInput = System.in
+}
