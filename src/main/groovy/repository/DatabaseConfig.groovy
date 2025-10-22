@@ -3,12 +3,13 @@ package repository
 import groovy.sql.Sql
 
 class DatabaseConfig {
-    private static final String DB_URL = "jdbc:postgresql://localhost:5432/postgres"
-    private static final String USER = "postgres"
-    private static final String PASS = "postgres"
-    private static final String DRIVER = "org.postgresql.Driver"
+
+    private static final String url = "jdbc:postgresql://localhost:5432/postgres"
+    private static final String user = "postgres"
+    private static final String pass = "postgres"
+    private static final String driver = "org.postgresql.Driver"
 
     static Sql getSqlInstance() {
-        return Sql.newInstance(DB_URL, USER, PASS, DRIVER)
+        return Sql.newInstance(url, user, pass, driver)
     }
 }

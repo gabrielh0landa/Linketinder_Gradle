@@ -5,6 +5,7 @@ import model.Empresa
 import model.Vaga
 
 interface IRepository {
+
     void adicionarCandidato(Candidato c)
     List<Candidato> listarCandidatos()
     Candidato buscarCandidato(int id)
@@ -18,4 +19,5 @@ interface IRepository {
     void adicionarVaga(Vaga vaga)
     List<Vaga> listarVagasPorEmpresa(int idEmpresa)
     List<Vaga> listarTodasVagas()
+
 }

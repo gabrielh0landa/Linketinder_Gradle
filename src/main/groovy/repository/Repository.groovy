@@ -4,7 +4,7 @@ import model.Candidato
 import model.Empresa
 import model.Vaga
 import java.text.SimpleDateFormat
-import java.util.Date
+
 
 class Repository implements IRepository {
 
@@ -37,7 +37,7 @@ class Repository implements IRepository {
 
     @Override
     void adicionarCandidato(Candidato c) {
-        candidatos << c
+        candidatos.add(c)
     }
 
     @Override
@@ -59,7 +59,7 @@ class Repository implements IRepository {
 
     @Override
     void adicionarEmpresa(Empresa e) {
-        empresas << e
+        empresas.add(e)
     }
 
     @Override

@@ -1,10 +1,8 @@
 package repository
 
-import repository.DatabaseConfig
 import model.Candidato
 import model.Empresa
 import model.Vaga
-import groovy.sql.GroovyRowResult
 import java.sql.Date as SqlDate
 
 class RepositoryJdbc implements IRepository {
@@ -257,4 +255,5 @@ class RepositoryJdbc implements IRepository {
             return generatedKeys[0][0]
         }
     }
+
 }

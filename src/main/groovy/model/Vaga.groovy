@@ -4,6 +4,7 @@ import groovy.transform.ToString
 
 @ToString(includeNames = true, includePackage = false)
 class Vaga {
+
     Integer id
     String nome
     String descricao
@@ -20,5 +21,4 @@ class Vaga {
         this.competencias = competencias
     }
 
-    Vaga() {}
 }
