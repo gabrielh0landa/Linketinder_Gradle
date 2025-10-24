@@ -3,7 +3,7 @@ package test
 import model.Candidato
 import org.junit.jupiter.api.Test
 import java.text.SimpleDateFormat
-import java.util.Date
+
 import static org.junit.jupiter.api.Assertions.*
 
 class CandidatoTest {
