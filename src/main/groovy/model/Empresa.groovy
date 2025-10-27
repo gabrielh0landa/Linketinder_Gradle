@@ -9,8 +9,8 @@ class Empresa extends Pessoa {
     List<Vaga> vagas = []
 
 
-    Empresa(Integer id, String nome, String email, String descricao, String cep, String pais, String senha, List<String> competencias = [], String cnpj, List<Vaga> vagas = []) {
-        super(id, nome, email, descricao, cep, pais, senha, competencias)
+    Empresa(Integer id, String nome, String email, String descricao, String cep, String pais, String senha, String cnpj, List<Vaga> vagas = []) {
+        super(id, nome, email, descricao, cep, pais, senha)
         this.cnpj = cnpj
         this.vagas = vagas
     }
