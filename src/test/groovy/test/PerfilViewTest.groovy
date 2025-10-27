@@ -2,6 +2,8 @@ package test
 
 import org.junit.jupiter.api.*
 
+import java.time.LocalDate
+
 import static org.junit.jupiter.api.Assertions.*
 import view.PerfilView
 
@@ -42,4 +44,29 @@ class PerfilViewTest {
         println(nome)
         assertEquals("Gabriel", nome)
     }
+
+    @Test
+    void deveRetornarIntDigitadaPeloUsuario(){
+        String inputSimulado = "4\n"
+        ByteArrayInputStream inputStreamSimulado = new ByteArrayInputStream(inputSimulado.bytes)
+        System.setIn(inputStreamSimulado)
+        PerfilView perfilView = new PerfilView()
+        Integer idade = perfilView.pedirIntAoUsuario("Me passe sua idade")
+        println(idade)
+        assertEquals(4, idade)
+
+    }
+
+    @Test
+    void deveRetornarLocalDateDigitadaPeloUsuario(){
+        String inputSimulado = "23/10/2005\n"
+        ByteArrayInputStream inputStreamSimulado = new ByteArrayInputStream(inputSimulado.bytes)
+        System.setIn(inputStreamSimulado)
+        PerfilView perfilView = new PerfilView()
+        LocalDate dataDeNascimento = perfilView.pedirDataAoUsuario("Me passe sua data de nascimneto")
+        println(dataDeNascimento)
+        LocalDate dataEsperada = LocalDate.of(2005, 10, 23)
+        assertEquals(dataEsperada, dataDeNascimento)
+    }
+
 }

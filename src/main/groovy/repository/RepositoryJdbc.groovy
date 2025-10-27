@@ -17,20 +17,21 @@ class RepositoryJdbc implements IRepository {
                     VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?);
                 """
                 def dataParaBanco = new SqlDate(candidato.data_nascimento.getTime())
+
                 def generatedKeys = sql.executeInsert(insertQuery, [
                         candidato.nome, candidato.sobrenome, dataParaBanco,
                         candidato.email, candidato.cpf, candidato.pais,
                         candidato.cep, candidato.descricao, candidato.senha
                 ], ['id'])
 
-                if (generatedKeys) {
-                    def novoId = generatedKeys[0][0]
-                    candidato.id = novoId
-                    candidato.competencias.each { nomeCompetencia ->
-                        def competenciaId = findOrCreateCompetencia(sql, nomeCompetencia)
-                        sql.execute("INSERT INTO candidato_competencia (id_candidato, id_competencia) VALUES (?, ?);", [novoId, competenciaId])
-                    }
+                def novoId = generatedKeys[0][0]
+                candidato.id = novoId
+                candidato.competencias.each { nomeCompetencia ->
+                    def competenciaId = findOrCreateCompetencia(sql, nomeCompetencia)
+                    sql.execute("INSERT INTO candidato_competencia (id_candidato, id_competencia) VALUES (?, ?);", [novoId, competenciaId])
                 }
+            }
+                if (generatedKeys) {
             }
         } finally {
             sql.close()
@@ -86,11 +87,13 @@ class RepositoryJdbc implements IRepository {
             sql.withTransaction {
                 String updateQuery = "UPDATE candidato SET nome = ?, sobrenome = ?, data_nascimento = ?, email = ?, cpf = ?, pais = ?, cep = ?, descricao = ?, senha = ? WHERE id = ?;"
                 def dataParaBanco = new SqlDate(candidato.data_nascimento.getTime())
+
                 sql.executeUpdate(updateQuery, [
                         candidato.nome, candidato.sobrenome, dataParaBanco,
                         candidato.email, candidato.cpf, candidato.pais,
                         candidato.cep, candidato.descricao, candidato.senha, id
                 ])
+
                 sql.execute("DELETE FROM candidato_competencia WHERE id_candidato = ?;", [id])
                 candidato.competencias.each { nomeCompetencia ->
                     def competenciaId = findOrCreateCompetencia(sql, nomeCompetencia)
