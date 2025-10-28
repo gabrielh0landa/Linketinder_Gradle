@@ -4,7 +4,7 @@ import groovy.transform.ToString
 
 @ToString
 class Pessoa {
-    int id
+    Integer id
     String nome
     String email
     String descricao
