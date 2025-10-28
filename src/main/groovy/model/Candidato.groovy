@@ -9,13 +9,14 @@ class Candidato extends Pessoa {
 
     String sobrenome
     String cpf
-    LocalDate data_nascimento
+    LocalDate dataDeNascimento
+    List<String> competencias = new ArrayList<String>()
 
-    // Construtor da Super Classe com ID
-    Candidato(Integer id, String nome, String email, String descricao, String cep, String pais, String senha, List<String> competencias = [], String cpf, LocalDate data_nascimento, String sobrenome) {
-        super(id, nome, email, descricao, cep, pais, senha, competencias)
+    Candidato(Integer id, String nome, String email, String descricao, String cep, String pais, String senha, List<String> competencias, String cpf, LocalDate dataDeNascimento, String sobrenome) {
+        super(id, nome, email, descricao, cep, pais, senha)
+        this.competencias = competencias
         this.cpf = cpf
-        this.data_nascimento = data_nascimento
+        this.dataDeNascimento = dataDeNascimento
         this.sobrenome = sobrenome
     }
 
