@@ -72,7 +72,7 @@ class CandidatoView extends BaseView {
         String cep = pedirStringAoUsuarioComValorPadrao("CEP", candidatoAtual.cep)
         String pais = pedirStringAoUsuarioComValorPadrao("País", candidatoAtual.pais)
         String senha = pedirStringAoUsuarioComValorPadrao("Senha", candidatoAtual.senha)
-        LocalDate dataDeNascimento = pedirDataAoUsuarioComValorPadrao("Data de Nascimento", candidatoAtual.data_nascimento)
+        LocalDate dataDeNascimento = pedirDataAoUsuarioComValorPadrao("Data de Nascimento", candidatoAtual.dataDeNascimento)
 
         List<String> competenciasFinais = candidatoAtual.competencias
 
