@@ -10,11 +10,13 @@ interface IRepository {
     List<Candidato> listarCandidatos()
     Candidato buscarCandidato(int id)
     void atualizarCandidato(int id, Candidato c)
+    void deletarCandidato(int id)
 
     void adicionarEmpresa(Empresa e)
     List<Empresa> listarEmpresas()
     Empresa buscarEmpresa(int id)
     void atualizarEmpresa(int id, Empresa e)
+    void deletarEmpresa(int id)
 
     void adicionarVaga(Vaga vaga)
     List<Vaga> listarVagasPorEmpresa(int idEmpresa)

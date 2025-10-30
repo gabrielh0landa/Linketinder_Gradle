@@ -14,7 +14,7 @@ abstract class BaseView {
         return string
     }
 
-    protected int pedirIntAoUsuario(String mensagemDoPedido) {
+    public int pedirIntAoUsuario(String mensagemDoPedido) {
         println "$mensagemDoPedido"
 
         while (true) {

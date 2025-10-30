@@ -52,7 +52,6 @@ class PerfilService {
         }
 
         if (candidato.competencias == null || candidato.competencias.isEmpty()) {
-            // Silenciosamente aceita
         }
     }
 
@@ -79,7 +78,6 @@ class PerfilService {
                 try {
                     candidatoAtual."$key" = value
                 } catch (ReadOnlyPropertyException roe) {
-                    // Ignora
                 }
             }
         }
@@ -87,6 +85,68 @@ class PerfilService {
         validarCandidato(candidatoAtual)
         repository.atualizarCandidato(id, candidatoAtual)
         return candidatoAtual
+    }
+
+    Candidato adicionarCompetenciasParaCandidato(int candidatoId, List<String> novasCompetencias) {
+        Candidato candidato = buscarCandidato(candidatoId) // Reusa o método buscar
+        if (candidato == null) {
+            throw new NoSuchElementException("Candidato com ID $candidatoId não encontrado.")
+        }
+
+        int adicionadas = 0
+        novasCompetencias.each { novaComp ->
+            if (novaComp?.trim() && !candidato.competencias.contains(novaComp.trim())) {
+                candidato.competencias.add(novaComp.trim())
+                adicionadas++
+            }
+        }
+
+        if (adicionadas == 0) {
+            println "[Service] Nenhuma competência nova foi adicionada (já existiam ou eram inválidas)."
+            return candidato
+        }
+
+        repository.atualizarCandidato(candidatoId, candidato)
+        println "[Service] $adicionadas competências adicionadas."
+        return candidato
+    }
+
+    Candidato removerCompetenciaDeCandidato(int candidatoId, String competenciaParaRemover) {
+        Candidato candidato = buscarCandidato(candidatoId)
+        if (candidato == null) {
+            throw new NoSuchElementException("Candidato com ID $candidatoId não encontrado.")
+        }
+
+        if (!competenciaParaRemover || !candidato.competencias.contains(competenciaParaRemover)) {
+            throw new IllegalArgumentException("Competência '${competenciaParaRemover}' não encontrada neste candidato.")
+        }
+        candidato.competencias.remove(competenciaParaRemover)
+
+        repository.atualizarCandidato(candidatoId, candidato)
+        println "[Service] Competência removida."
+        return candidato
+    }
+
+    void deletarCandidato(int candidatoId) {
+        println "[Service] Tentando deletar candidato ID: $candidatoId"
+        Candidato candidato = buscarCandidato(candidatoId)
+        if (candidato == null) {
+            throw new NoSuchElementException("Candidato com ID $candidatoId não encontrado para deletar.")
+        }
+        repository.deletarCandidato(candidatoId)
+        println "[Service] Candidato ID $candidatoId deletado com sucesso."
+    }
+
+
+    void deletarEmpresa(int empresaId) {
+        println "[Service] Tentando deletar empresa ID: $empresaId"
+        Empresa empresa = buscarEmpresa(empresaId)
+        if (empresa == null) {
+            throw new NoSuchElementException("Empresa com ID $empresaId não encontrada para deletar.")
+        }
+
+        repository.deletarEmpresa(empresaId)
+        println "[Service] Empresa ID $empresaId e todas as suas vagas associadas foram deletadas."
     }
 
     Empresa criarEmpresa(Map dadosEmpresa) {
@@ -142,7 +202,6 @@ class PerfilService {
             throw new IllegalStateException("Vaga deve estar associada a uma empresa salva.")
         }
         if (vaga.competencias == null || vaga.competencias.isEmpty()) {
-            // Aceita
         }
     }
 
@@ -169,7 +228,6 @@ class PerfilService {
                 try {
                     empresaAtual."$key" = value
                 } catch (ReadOnlyPropertyException roe) {
-                    // Ignora
                 }
             }
         }
@@ -179,9 +237,6 @@ class PerfilService {
         if (novosDados.containsKey("vagas") && novosDados.get("vagas") != null) {
             List<Map> dadosNovasVagas = (List<Map>) novosDados.get("vagas")
             List<Vaga> vagasProcessadas = []
-
-            // ATENÇÃO: Descomente a linha abaixo QUANDO implementar deletarVagasPorEmpresa no Repository
-            // repository.deletarVagasPorEmpresa(id)
 
             dadosNovasVagas.each { mapVaga ->
                 Vaga vagaNova = new Vaga(mapVaga)

@@ -131,4 +131,104 @@ class PerfilController {
             e.printStackTrace()
         }
     }
+
+    void gerenciarCompetenciasCandidato() {
+        println "\n--- 7. Gerenciar Competências do Candidato ---"
+        try {
+            List<Candidato> listaAtual = service.listarCandidatos()
+            Integer id = candidatoView.pedirIdDoCandidato(listaAtual)
+            if (id == null) {
+                println "Operação cancelada."
+                return
+            }
+
+            Candidato candidato = service.buscarCandidato(id)
+            if (candidato == null) {
+                println "Candidato não encontrado."
+                return
+            }
+
+            println "\nGerenciando: [ID: ${candidato.id}] ${candidato.nome}"
+            println "Competências atuais: ${candidato.competencias.join(', ')}"
+            println "O que deseja fazer?\n 1. Adicionar competências\n 2. Remover competência\n 0. Voltar"
+            int opcao = candidatoView.pedirIntAoUsuario("Escolha uma opção:")
+
+            switch (opcao) {
+                case 1:
+                    List<String> novas = candidatoView.pedirCompetenciasParaAdicionar(candidato)
+                    if (novas.isEmpty()) {
+                        println "Nenhuma competência nova para adicionar."
+                    } else {
+                        service.adicionarCompetenciasParaCandidato(id, novas)
+                        println "Competências adicionadas com sucesso!"
+                    }
+                    break
+                case 2:
+                    String paraRemover = candidatoView.pedirCompetenciaParaRemover(candidato)
+                    if (paraRemover == null) {
+                        println "Remoção cancelada."
+                    } else {
+                        service.removerCompetenciaDeCandidato(id, paraRemover)
+                        println "Competência removida com sucesso!"
+                    }
+                    break
+                default:
+                    println "Voltando ao menu principal..."
+            }
+
+        } catch (IllegalArgumentException | NoSuchElementException e) {
+            println "\nERRO: ${e.message}"
+        } catch (Exception e) {
+            println "\nERRO INESPERADO: ${e.message}"
+            e.printStackTrace()
+        }
+    }
+
+    void deletarPerfis() {
+        println "\n--- 8. Deletar Perfis ---"
+        println "O que deseja deletar?\n 1. Deletar Candidato\n 2. Deletar Empresa\n 0. Voltar"
+        int opcao = candidatoView.pedirIntAoUsuario("Escolha uma opção:")
+
+        try {
+            switch (opcao) {
+                case 1:
+                    List<Candidato> listaC = service.listarCandidatos()
+                    Integer idC = candidatoView.pedirIdDoCandidato(listaC)
+                    if (idC == null) {
+                        println "Operação cancelada."
+                        break
+                    }
+                    String confC = candidatoView.pedirStringAoUsuario("Tem CERTEZA que quer deletar o candidato ID $idC? Isso não pode ser desfeito. (sim/nao)")
+                    if (confC.equalsIgnoreCase("sim")) {
+                        service.deletarCandidato(idC)
+                        println "Candidato deletado com sucesso."
+                    } else {
+                        println "Deleção cancelada."
+                    }
+                    break
+                case 2:
+                    List<Empresa> listaE = service.listarEmpresas()
+                    Integer idE = empresaView.pedirIdDaEmpresa(listaE)
+                    if (idE == null) {
+                        println "Operação cancelada."
+                        break
+                    }
+                    String confE = candidatoView.pedirStringAoUsuario("Tem CERTEZA que quer deletar a empresa ID $idE e TODAS as suas vagas? (sim/nao)")
+                    if (confE.equalsIgnoreCase("sim")) {
+                        service.deletarEmpresa(idE)
+                        println "Empresa e suas vagas deletadas com sucesso."
+                    } else {
+                        println "Deleção cancelada."
+                    }
+                    break
+                default:
+                    println "Voltando ao menu principal..."
+            }
+        } catch (NoSuchElementException e) {
+            println "\nERRO: ${e.message}"
+        } catch (Exception e) {
+            println "\nERRO INESPERADO AO DELETAR: ${e.message}"
+            e.printStackTrace()
+        }
+    }
 }

@@ -5,7 +5,6 @@ import org.junit.jupiter.api.*
 import java.time.LocalDate
 
 import static org.junit.jupiter.api.Assertions.*
-import view.PerfilView
 
 class PerfilViewTest {
 
